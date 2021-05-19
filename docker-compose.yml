@@ -1,0 +1,30 @@
+version: "3.7" # specify docker-compose version
+
+# Define the services/containers to be run
+  # frontend build image command: docker build -t family-calendar-frontend -f ./frontend/Dockerfile ./frontend
+  # backend build image command: docker build -t family-calendar-backend -f backend/Dockerfile ./backend
+  # database build image command: docker build -t family-calendar-database -f backend/Dockerfile.mongodb ./backend
+services:
+  frontend: # name of Angular app service
+    image: nicolasmura/family-calendar-v2-frontend-public
+    container_name: frontend-public
+    env_file:
+      - .env
+    ports:
+      - ${HOST_HTTPS_PORT}:443
+    volumes:
+      - ${ENV_JS}:/usr/local/apache2/htdocs/family-calendar/frontend-public/env.js
+      - ${APACHE_LOG}:/var/log/apache2
+      - ${SSL_VOLUME}:/var/imported/ssl
+    # depends_on:
+    #   - database
+    #   - backend
+    networks:
+      family-calendar-v2:
+
+networks:
+  family-calendar-v2:
+    driver: bridge
+    name: family-calendar-v2
+
+# volumes: set in docker-compose.macosx-override.yml & docker-compose.production.yml
