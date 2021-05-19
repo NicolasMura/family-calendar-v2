@@ -1,9 +1,6 @@
 version: "3.7" # specify docker-compose version
 
 # Define the services/containers to be run
-  # frontend build image command: docker build -t family-calendar-frontend -f ./frontend/Dockerfile ./frontend
-  # backend build image command: docker build -t family-calendar-backend -f backend/Dockerfile ./backend
-  # database build image command: docker build -t family-calendar-database -f backend/Dockerfile.mongodb ./backend
 services:
   frontend: # name of Angular app service
     image: nicolasmura/family-calendar-v2-frontend-public
