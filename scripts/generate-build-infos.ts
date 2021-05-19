@@ -45,7 +45,7 @@
  * Constants
  */
  // Path we write the file to, should match your Angular projects `src/` folder
- const exportPath = process.cwd() + '/projects/public/src/build.ts';
+ const exportPath = process.cwd() + '/apps/frontend-public/src/build.ts';
 
 /**
  * Get relevant build information
