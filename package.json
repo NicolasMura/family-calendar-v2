@@ -7,6 +7,7 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "nx": "nx",
     "start": "ng serve",
+    "generate-build-infos": "node node_modules/typescript/bin/tsc scripts/generate-build-infos.ts && node scripts/generate-build-infos.js --no-version --no-message --jenkinsBuildId $BUILD_ID",
     "build": "ng build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
