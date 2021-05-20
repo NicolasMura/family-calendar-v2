@@ -43,46 +43,47 @@ pipeline {
                     ls -la
                     node --version
                     yarn --version
-                    #CYPRESS_INSTALL_BINARY=0 yarn && BUILD_ID=${BUILD_ID} yarn generate-build-infos
-                    yarn && BUILD_ID=${BUILD_ID} yarn generate-build-infos
-                    npx nx e2e frontend-public-e2e --headless
+                    #yarn && BUILD_ID=${BUILD_ID} yarn generate-build-infos
+                    #npx nx e2e frontend-public-e2e --headless
                     #npx nx build frontend-public --prod
                 '''
             }
         }
-        // stage('Build & Push Docker image') {
-        //     agent any
-        //     steps {
-        //         sh '''#!/bin/bash
-        //             whoami
-        //             pwd
-        //             ls -la
-        //             docker --version
-        //         '''
-        //         withCredentials([file(credentialsId: 'family-calendar.nicolasmura.com_privkey.pem', variable: 'privkey'),
-        //                          file(credentialsId: 'family-calendar.nicolasmura.com_fullchain.pem', variable: 'fullchain')]) {
-        //             writeFile file: 'ssl/privkey.pem', text: readFile(privkey)
-        //             writeFile file: 'ssl/fullchain.pem', text: readFile(fullchain)
-        //         }
-        //         script {
-        //             DOCKER_IMAGE = docker.build("$DOCKER_IMAGE_NAME:$BUILD_NUMBER", "-f .docker/Dockerfile.frontend-public ")
-        //             DOCKER_IMAGE_LATEST = docker.build "$DOCKER_IMAGE_NAME"
-        //             // Assume the Docker Hub registry by passing an empty string as the first parameter
-        //             // @TODO: sécuriser le login (cf. job logs : warning WARNING! Using --password via the CLI is insecure. Use --password-stdin.)
-        //             docker.withRegistry('' , 'dockerhub') {
-        //                 DOCKER_IMAGE.push()
-        //                 DOCKER_IMAGE_LATEST.push()
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Clean') {
-        //     agent any
-        //     steps {
-        //         sh "docker image ls"
-        //         sh "docker rmi $DOCKER_IMAGE_NAME:$BUILD_NUMBER $DOCKER_IMAGE_NAME:latest"
-        //         sh "docker image ls"
-        //     }
-        // }
+        stage('Build & Push Docker image') {
+            agent any
+            steps {
+                sh '''#!/bin/bash
+                    whoami
+                    pwd
+                    ls -la
+                    docker --version
+                    #TMP - TESTS
+                    mkdir -p dist/apps/frontend-public
+                '''
+                withCredentials([file(credentialsId: 'family-calendar.nicolasmura.com_privkey.pem', variable: 'privkey'),
+                                 file(credentialsId: 'family-calendar.nicolasmura.com_fullchain.pem', variable: 'fullchain')]) {
+                    writeFile file: 'ssl/privkey.pem', text: readFile(privkey)
+                    writeFile file: 'ssl/fullchain.pem', text: readFile(fullchain)
+                }
+                script {
+                    DOCKER_IMAGE = docker.build("$DOCKER_IMAGE_NAME:$BUILD_NUMBER", "-f .docker/Dockerfile.frontend-public .")
+                    DOCKER_IMAGE_LATEST = docker.build("$DOCKER_IMAGE_NAME", "-f .docker/Dockerfile.frontend-public .")
+                    // Assume the Docker Hub registry by passing an empty string as the first parameter
+                    // @TODO: sécuriser le login (cf. job logs : warning WARNING! Using --password via the CLI is insecure. Use --password-stdin.)
+                    docker.withRegistry('' , 'dockerhub') {
+                        DOCKER_IMAGE.push()
+                        DOCKER_IMAGE_LATEST.push()
+                    }
+                }
+            }
+        }
+        stage('Clean') {
+            agent any
+            steps {
+                sh "docker image ls"
+                sh "docker rmi $DOCKER_IMAGE_NAME:$BUILD_NUMBER $DOCKER_IMAGE_NAME:latest"
+                sh "docker image ls"
+            }
+        }
     }
 }
