@@ -25,6 +25,9 @@
     "frontend-public-e2e": {
       "tags": [],
       "implicitDependencies": ["frontend-public"]
+    },
+    "api": {
+      "tags": []
     }
   }
 }

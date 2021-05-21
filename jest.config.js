@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/apps/frontend-public'],
+  projects: ['<rootDir>/apps/frontend-public', '<rootDir>/apps/api'],
 };
