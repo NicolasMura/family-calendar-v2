@@ -17,11 +17,29 @@ services:
     #   - database
     #   - backend
     networks:
-      family-calendar-v2:
+      family-calendar-v2-network:
+
+  api: # name of Node JS app
+    image: nicolasmura/family-calendar-v2-backend-api
+    container_name: backend-api
+    env_file:
+      - .env
+    ports:
+      - ${NODE_PORT}:${NODE_PORT} # specify ports forwarding
+    volumes:
+      - .env:/usr/family-calendar-v2/backend-api/.env
+    # depends_on:
+    #   database:
+    #     condition: service_healthy
+    restart: on-failure
+    networks:
+      family-calendar-v2-network:
+        aliases:
+          - database
 
 networks:
-  family-calendar-v2:
+  family-calendar-v2-network:
     driver: bridge
-    name: family-calendar-v2
+    name: family-calendar-v2-network
 
 # volumes: set in docker-compose.macosx-override.yml & docker-compose.production.yml

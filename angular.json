@@ -49,7 +49,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "apps/frontend-public/src/favicon.ico",
-              "apps/frontend-public/src/assets"
+              "apps/frontend-public/src/assets",
+              "apps/frontend-public/src/env.js"
             ],
             "styles": ["apps/frontend-public/src/styles.scss"],
             "scripts": []
@@ -153,19 +154,19 @@
         }
       }
     },
-    "api": {
-      "root": "apps/api",
-      "sourceRoot": "apps/api/src",
+    "backend-api": {
+      "root": "apps/backend-api",
+      "sourceRoot": "apps/backend-api/src",
       "projectType": "application",
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "outputPath": "dist/apps/backend-api",
+            "main": "apps/backend-api/src/main.ts",
+            "tsConfig": "apps/backend-api/tsconfig.app.json",
+            "assets": ["apps/backend-api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -174,8 +175,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
+                  "replace": "apps/backend-api/src/environments/environment.ts",
+                  "with": "apps/backend-api/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -184,20 +185,20 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "api:build"
+            "buildTarget": "backend-api:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/api/**/*.ts"]
+            "lintFilePatterns": ["apps/backend-api/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/api"],
+          "outputs": ["coverage/apps/backend-api"],
           "options": {
-            "jestConfig": "apps/api/jest.config.js",
+            "jestConfig": "apps/backend-api/jest.config.js",
             "passWithNoTests": true
           }
         }

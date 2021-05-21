@@ -26,7 +26,7 @@
       "tags": [],
       "implicitDependencies": ["frontend-public"]
     },
-    "api": {
+    "backend-api": {
       "tags": []
     }
   }

@@ -26,7 +26,9 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "deploy:frontend-public:dockerhub": "nx build frontend-public --prod && docker build -t family-calendar-v2-frontend-public -f .docker/Dockerfile.frontend-public . && docker tag family-calendar-v2-frontend-public nicolasmura/family-calendar-v2-frontend-public && docker push nicolasmura/family-calendar-v2-frontend-public",
+    "deploy:backend-api:dockerhub": "nx build backend-api --prod && docker build -t family-calendar-v2-backend-api -f .docker/Dockerfile.backend-api . && docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api && docker push nicolasmura/family-calendar-v2-backend-api"
   },
   "private": true,
   "dependencies": {
@@ -39,6 +41,7 @@
     "@angular/platform-browser-dynamic": "12.0.0",
     "@angular/router": "12.0.0",
     "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
     "@nrwl/angular": "12.3.3",
@@ -71,7 +74,6 @@
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "cypress": "^6.0.1",
-    "dotenv": "8.2.0",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",

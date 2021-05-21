@@ -20,5 +20,6 @@ export class AppService {
     this.todos.push({
       title: `New todo ${Math.floor(Math.random() * 1000)}`,
     });
+    return this.todos;
   }
 }

@@ -107,7 +107,16 @@ If needed, adjust environment variables in `apps/frontend-public/src/env.js`
 
 Build new image for `backend`:
 
-@TODO
+```bash
+  nx build backend-api --prod
+  docker build -t family-calendar-v2-backend-api -f .docker/Dockerfile.backend-api .
+  docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api
+  docker push nicolasmura/family-calendar-v2-backend-api
+  docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api:v1.0
+  docker push nicolasmura/family-calendar-v2-backend-api:v1.0
+
+  mkdir -p apache_vol/log && mkdir apache_vol/ssl
+```
 
 Build new image for `database`:
 
