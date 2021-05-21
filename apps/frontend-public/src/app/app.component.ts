@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 interface Todo {
@@ -12,6 +13,14 @@ interface Todo {
 export class AppComponent {
   title = 'frontend-public';
   todos: Todo[] = [{ title: 'Todo 1' }, { title: 'Todo 2' }];
+
+  constructor(private http: HttpClient) {
+    this.fetch();
+  }
+
+  fetch() {
+    this.http.get<Todo[]>('/api/todos').subscribe((t) => (this.todos = t));
+  }
 
   addTodo() {
     this.todos.push({
