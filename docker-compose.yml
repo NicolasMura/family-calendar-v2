@@ -13,9 +13,9 @@ services:
       - ${ENV_JS}:/usr/local/apache2/htdocs/family-calendar/frontend-public/env.js
       - ${APACHE_LOG}:/var/log/apache2
       - ${SSL_VOLUME}:/var/imported/ssl
-    # depends_on:
-    #   - database
-    #   - backend
+    depends_on:
+      - database
+      - backend
     networks:
       family-calendar-v2-network:
 
@@ -25,13 +25,32 @@ services:
     env_file:
       - .env
     ports:
-      - ${NODE_PORT}:${NODE_PORT} # specify ports forwarding
+      - ${NODE_PORT}:${NODE_PORT}
     volumes:
       - .env:/usr/family-calendar-v2/backend-api/.env
-    # depends_on:
-    #   database:
-    #     condition: service_healthy
+    depends_on:
+      database:
+        condition: service_healthy
     restart: on-failure
+    networks:
+      family-calendar-v2-network:
+        aliases:
+          - database
+
+  database: # name of database service
+    image: nicolasmura/family-calendar-v2-database
+    container_name: database
+    env_file:
+      - .env
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    command: ["--port", "$DB_PORT", "--logpath", "/var/log/mongodb/mongod.log"] # override the default command to start the service in the container
+    healthcheck:
+      test: ["CMD", "database-healthcheck.sh"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+      start_period: 20s
     networks:
       family-calendar-v2-network:
         aliases:

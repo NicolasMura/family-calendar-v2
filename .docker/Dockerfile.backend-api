@@ -5,7 +5,7 @@ FROM node:12-alpine
 RUN mkdir -p /usr/family-calendar-v2/backend-api
 
 # Change directory so that our commands run inside this new directory
-WORKDIR /usr/family-calendar/backend-api
+WORKDIR /usr/family-calendar-v2/backend-api
 
 # Copy dependency definitions
 COPY package.json yarn.lock ./

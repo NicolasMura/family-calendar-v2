@@ -6,7 +6,7 @@
 
 # Family Calendar PWA V2
 
-Fullstack monorepo for Family Calendar project
+Fullstack Angular - Node JS - MongoDB monorepo for Family Calendar project.
 
 - [Family Calendar PWA V2](#family-calendar-pwa-v2)
 - [Requirements](#requirements)
@@ -61,6 +61,10 @@ To stop the app, just run:
 
 ## Run & test locally without Docker
 
+If needed, adjust environment variables in `apps/frontend-public/src/env.js`
+
+@TODO Local mongodb configuration
+
 In you favorite terminal, run:
 
 ```bash
@@ -103,8 +107,6 @@ Build new image for `frontend-public`:
   mkdir -p apache_vol/log && mkdir apache_vol/ssl
 ```
 
-If needed, adjust environment variables in `apps/frontend-public/src/env.js`
-
 Build new image for `backend`:
 
 ```bash
@@ -121,7 +123,11 @@ Build new image for `backend`:
 Build new image for `database`:
 
 ```bash
-  @TODO
+  docker build -t family-calendar-v2-database -f .docker/Dockerfile.mongodb .
+  docker tag family-calendar-v2-database nicolasmura/family-calendar-v2-database
+  docker push nicolasmura/family-calendar-v2-database
+  docker tag family-calendar-v2-database nicolasmura/family-calendar-v2-database:v1.0
+  docker push nicolasmura/family-calendar-v2-database:v1.0
 ```
 
 Finally:
