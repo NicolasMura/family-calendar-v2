@@ -28,6 +28,9 @@
     },
     "backend-api": {
       "tags": []
+    },
+    "models": {
+      "tags": []
     }
   }
 }

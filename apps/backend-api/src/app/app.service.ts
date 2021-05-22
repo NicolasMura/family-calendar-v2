@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Todo } from '@family-calendar-v2/models';
 
-interface Todo {
-  title: string;
-}
 
 @Injectable()
 export class AppService {

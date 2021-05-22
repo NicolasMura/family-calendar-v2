@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { environment } from 'apps/frontend-public/src/environments/environment';
+import { environment } from 'apps/frontend-public/src/environment';
+import { Todo } from '@family-calendar-v2/models';
 
-interface Todo {
-  title: string;
-}
 
 @Component({
   selector: 'family-calendar-v2-root',

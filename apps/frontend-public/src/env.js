@@ -12,5 +12,5 @@
   window.__env.backendApi.baseUrlAuth          = 'http://localhost:3333' + apiPath + '/auth';
   window.__env.backendApi.baseUrlUser          = 'http://localhost:3333' + apiPath + '/users';
   window.__env.backendApi.baseUrlCalendarEvent = 'http://localhost:3333' + apiPath + '/events';
-  window.__env.backendApi.baseUrlTodos         = 'http://localhost:3334' + apiPath + '/todos';
+  window.__env.backendApi.baseUrlTodos         = 'http://localhost:3333' + apiPath + '/todos';
 })(this);
