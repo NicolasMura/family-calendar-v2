@@ -9,10 +9,12 @@
 <main>
   <h1>List of Todos</h1>
 
-  <ul>
+  <!-- <ul>
     <li *ngFor="let t of todos" class="todo">{{ t.title }}</li>
-  </ul>
+  </ul> -->
+  <lib-todos [todos]="todos"></lib-todos>
   <button id="add-todo" (click)="addTodo()">Add Todo</button>
+
   <h2>Resources &amp; Tools</h2>
   <p>Thank you for using and showing some ♥ for Nx.</p>
   <div class="flex github-star-container">

@@ -1,10 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FrontendToolsModule } from '@family-calendar-v2/frontend-tools';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
+      imports: [
+        HttpClientTestingModule,
+        FrontendToolsModule
+      ]
     }).compileComponents();
   });
 

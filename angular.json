@@ -36,7 +36,7 @@
       "projectType": "application",
       "root": "apps/frontend-public",
       "sourceRoot": "apps/frontend-public/src",
-      "prefix": "family-calendar-v2",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -193,7 +193,7 @@
       "projectType": "library",
       "root": "libs/frontend-tools",
       "sourceRoot": "libs/frontend-tools/src",
-      "prefix": "family-calendar-v2",
+      "prefix": "lib",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
