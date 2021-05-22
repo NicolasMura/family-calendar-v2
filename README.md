@@ -120,6 +120,10 @@ Build new image for `backend`:
 
 Build new image for `database`:
 
+```bash
+  @TODO
+```
+
 Finally:
 
 ```bash

@@ -18,10 +18,10 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     this.fetch();
+    console.log(environment);
   }
 
   fetch() {
-    // this.http.get<Todo[]>('/api/todos').subscribe((t) => (this.todos = t));
     this.http.get<Todo[]>(this.baseUrlTodos).subscribe((t) => (this.todos = t));
   }
 

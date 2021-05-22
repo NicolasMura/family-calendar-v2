@@ -6,7 +6,7 @@ const apiPath = '/api';
 
 export const environment = {
   production: (window as any).__env?.production || false,
-  bob: (window as any).__env?.bob || 'marley',
+  bob: (window as any).__env?.bob || 'undefined',
   // hmr: true,
   // envName: 'local',
   // appVersion,
@@ -14,14 +14,14 @@ export const environment = {
   // docApiUrl : '/swagger-ui.html',
   // logsApiUrl: '/api/logs',
   // enabledCache: false, // enable cache management (application + localStorage)
-  serviceWorkerScript: (window as any).__env?.serviceWorkerScript || 'sw-sync.js',
+  serviceWorkerScript: (window as any).__env?.serviceWorkerScript || 'undefined',
 
-  wsEndpoint: (window as any).__env?.wsEndpoint || 'ws://localhost:3333',
+  wsEndpoint: (window as any).__env?.wsEndpoint || 'undefined',
   backendApi: {
-    baseUrlAuth:          (window as any).__env?.backendApi?.baseUrlAuth          || 'http://localhost:3333/' + apiPath + 'auth',
-    baseUrlUser:          (window as any).__env?.backendApi?.baseUrlUser          || 'http://localhost:3333' + apiPath + '/users',
-    baseUrlCalendarEvent: (window as any).__env?.backendApi?.baseUrlCalendarEvent || 'http://localhost:3333' + apiPath + '/events',
-    baseUrlTodos:      (window as any).__env?.backendApi?.baseUrlTodos      || 'http://localhost:3333' + apiPath + '/todos',
+    baseUrlAuth:          (window as any).__env?.backendApi?.baseUrlAuth || 'undefined',
+    baseUrlUser:          (window as any).__env?.backendApi?.baseUrlUser || 'undefined',
+    baseUrlCalendarEvent: (window as any).__env?.backendApi?.baseUrlCalendarEvent || 'undefined',
+    baseUrlTodos:      (window as any).__env?.backendApi?.baseUrlTodos || 'undefined',
   },
 };
 
