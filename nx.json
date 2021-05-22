@@ -29,6 +29,9 @@
     "backend-api": {
       "tags": []
     },
+    "frontend-tools": {
+      "tags": []
+    },
     "models": {
       "tags": []
     }

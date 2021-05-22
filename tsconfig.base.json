@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@family-calendar-v2/frontend-tools": ["libs/frontend-tools/src/index.ts"],
       "@family-calendar-v2/models": ["libs/models/src/index.ts"]
     }
   },

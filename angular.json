@@ -189,6 +189,31 @@
         }
       }
     },
+    "frontend-tools": {
+      "projectType": "library",
+      "root": "libs/frontend-tools",
+      "sourceRoot": "libs/frontend-tools/src",
+      "prefix": "family-calendar-v2",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/frontend-tools"],
+          "options": {
+            "jestConfig": "libs/frontend-tools/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/frontend-tools/src/**/*.ts",
+              "libs/frontend-tools/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "models": {
       "root": "libs/models",
       "sourceRoot": "libs/models/src",
