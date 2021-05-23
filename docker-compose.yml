@@ -4,7 +4,7 @@ version: "3.7" # specify docker-compose version
 services:
   frontend: # name of Angular app service
     image: nicolasmura/family-calendar-v2-frontend-public
-    container_name: frontend-public
+    container_name: frontend-v2
     env_file:
       - .env
     ports:
@@ -15,13 +15,13 @@ services:
       - ${SSL_VOLUME}:/var/imported/ssl
     depends_on:
       - database
-      - backend
+      - api
     networks:
       family-calendar-v2-network:
 
   api: # name of Node JS app
     image: nicolasmura/family-calendar-v2-backend-api
-    container_name: backend-api
+    container_name: backend-v2
     env_file:
       - .env
     ports:
@@ -39,7 +39,7 @@ services:
 
   database: # name of database service
     image: nicolasmura/family-calendar-v2-database
-    container_name: database
+    container_name: database-v2
     env_file:
       - .env
     ports:
