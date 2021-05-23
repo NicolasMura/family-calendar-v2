@@ -18,6 +18,7 @@ Fullstack Angular - Node JS - MongoDB monorepo for Family Calendar project.
   - [Frontend, backend and MongoDB for Prod](#frontend-backend-and-mongodb-for-prod)
 - [Deploy in a real-world production environment](#deploy-in-a-real-world-production-environment)
 - [A few words about Nx](#a-few-words-about-nx)
+  - [CheatSheet](#cheatsheet)
 
 # Requirements
 
@@ -150,3 +151,17 @@ Visit the [Nx Angular Documentation](https://nx.dev/angular) to learn more.
 [10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
 
 [Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+
+## CheatSheet
+
+Create auth module running the 'module' NestJs generator with Nx project support :
+
+```bash
+  nx g @nrwl/nest:module auth --project backend-api --directory app
+```
+
+Create auth service inside auth module running the 'service' NestJs generator with Nx project support :
+
+```bash
+  nx g @nrwl/nest:service auth --project backend-api --directory app/auth --flat
+```
