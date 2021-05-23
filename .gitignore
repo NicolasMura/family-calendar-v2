@@ -44,3 +44,4 @@ ssl/fullchain.pem
 ssl/privkey.pem
 scripts/generate-build-infos.js
 apache_vol
+mongodb_vol
