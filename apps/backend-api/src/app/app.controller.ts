@@ -22,6 +22,7 @@ export class AppController {
   // }
 
   @UseGuards(LocalAuthGuard)
+  @Public()
   @Post('auth/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
@@ -29,6 +30,8 @@ export class AppController {
 
   @Get('profile')
   getProfile(@Request() req) {
+    console.log('**************');
+    console.log(req.user);
     return req.user;
   }
 
@@ -37,7 +40,6 @@ export class AppController {
     return this.usersService.findAll();
   }
 
-  @Public()
   @Get('todos')
   getData() {
     return this.appService.getData();
