@@ -21,26 +21,6 @@ export class AppController {
   //   return this.appService.getData();
   // }
 
-  @UseGuards(LocalAuthGuard)
-  @Public()
-  @Post('auth/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
-  }
-
-  @Get('profile')
-  getProfile(@Request() req) {
-    // Logger.log('**************');
-    // Logger.log(req.user);
-    // return req.user;
-    return this.usersService.getCurrentUser();
-  }
-
-  @Get('users')
-  getUsers(@Request() req) {
-    return this.usersService.findAll();
-  }
-
   @Get('todos')
   getData() {
     return this.appService.getData();
