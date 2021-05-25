@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, SetMetadata, UseGuards } from '@nestjs/common';
+import { Controller, Get, Logger, Post, Request, SetMetadata, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { UsersService } from './users/users.service';
@@ -30,9 +30,10 @@ export class AppController {
 
   @Get('profile')
   getProfile(@Request() req) {
-    console.log('**************');
-    console.log(req.user);
-    return req.user;
+    // Logger.log('**************');
+    // Logger.log(req.user);
+    // return req.user;
+    return this.usersService.getCurrentUser();
   }
 
   @Get('users')

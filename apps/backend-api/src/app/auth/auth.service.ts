@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
+import { User } from '../users/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -10,16 +11,31 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(email);
+    Logger.log('*********** AuthService - validateUser');
+    Logger.log(email);
+    Logger.log(pass);
 
-    if (user && user.password === pass) {
+    const user: User = await this.usersService.findUserByEmail(email);
+
+    const isMatched: boolean = await user.comparePassword(pass);
+
+    Logger.log(isMatched);
+    if (isMatched) {
       const { password, ...result } = user;
       return result;
+    } else {
+      Logger.error('Bad password');
     }
-    return null;
+
+    throw new HttpException({
+      statusCode: HttpStatus.UNAUTHORIZED,
+      message: 'Bad password',
+    }, HttpStatus.UNAUTHORIZED);
+    // return null;
   }
 
   async login(user: any) {
+    Logger.log('*********** AuthService - login');
     const payload = { email: user.email, username: user.username, sub: user.userId };
     return {
       access_token: this.jwtService.sign(payload),
