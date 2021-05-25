@@ -34,14 +34,23 @@ export class AuthService {
     // return null;
   }
 
-  async login(user: any) {
+  async login(user: User): Promise<any> {
     Logger.log('*********** AuthService - login');
     const payload = { email: user.email, username: user.username, sub: user.userId };
+
     return {
       access_token: this.jwtService.sign(payload),
       status: 200,
       logged: true,
       message: 'Sign in successfull'
     };
+  }
+
+  async signup(user: User): Promise<any> {
+    Logger.log('*********** AuthService - signup');
+    Logger.log(user);
+    const newUser: Partial<User> = await this.usersService.createUser(user);
+
+    return newUser;
   }
 }

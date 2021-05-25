@@ -16,12 +16,13 @@ export class User extends Document {
   @Prop()
   username: string;
 
-  @Prop({ unique: true })
+  @Prop({ unique: true, required: true })
   email: string;
 
   @Prop({ unique: true })
   mobile: string;
 
+  @Prop({ required: true })
   @Prop()
   password: string;
 
@@ -64,8 +65,30 @@ UserSchema.methods.comparePassword = async function (candidatePassword: string):
     return match;
   } catch (error) {
     Logger.error(error);
-    Logger.error(error);
     return error;
     // throw new Error('Invalid password or email');
   }
 };
+
+/**
+* Save hashed password
+*/
+UserSchema.pre<User>('save', async function(next: Function) {
+  const user: User = this;
+
+  // if (!user.isModified('password')) {
+  //   return next();
+  // }
+
+  console.log(user);
+  try {
+    const salt: string = await bcrypt.genSalt(10);
+
+    const hash: string = await bcrypt.hash(user.password, salt);
+
+    user.password = hash;
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});

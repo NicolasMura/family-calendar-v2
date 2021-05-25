@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
@@ -47,6 +47,45 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     // return this.users;
     return [];
+  }
+
+  async createUser(user: User): Promise<Partial<User> | undefined> {
+    const newUser = new this.userModel(user);
+
+    const existingEmail: User = await this.userModel.findOne({ email: newUser.email });
+
+    if (existingEmail) {
+      Logger.error(`This email already exists`);
+      throw new ConflictException(`This email already exists`);
+    }
+
+    if (newUser.mobile) {
+      const existingMobile: User = await this.userModel.findOne({ mobile: newUser.mobile });
+
+      if (existingMobile) {
+        Logger.error(`This mobile already exists`);
+        throw new ConflictException(`This mobile already exists`);
+      }
+    }
+
+    let savedUser: User;
+    try {
+      savedUser = await this.userModel.create(newUser);
+    } catch (error) {
+      Logger.error(error);
+      // throw new BadRequestException(error);
+      throw new HttpException({
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: error
+      }, HttpStatus.BAD_REQUEST);
+    }
+
+    Logger.log('savedUser:');
+    Logger.log(savedUser);
+
+    // return savedUser;
+    const { password, ...result } = newUser;
+    return result;
   }
 
 
