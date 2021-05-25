@@ -6,8 +6,11 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // get env variables from .env file through ConfigService
   const config =  app.get(ConfigService);
 
+  // configure CORS
   const ALLOWED_CORS: string = config.get<string>('ALLOWED_CORS');
   if(ALLOWED_CORS) {
     let whitelist: string[];

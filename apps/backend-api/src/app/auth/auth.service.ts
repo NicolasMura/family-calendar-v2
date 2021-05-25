@@ -1,5 +1,6 @@
-import { HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { AuthValidation } from './auth.validation';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.schema';
 
@@ -7,7 +8,8 @@ import { User } from '../users/user.schema';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private authValidation: AuthValidation
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
@@ -46,10 +48,22 @@ export class AuthService {
     };
   }
 
-  async signup(user: User): Promise<any> {
+  async signup(user: User): Promise<Partial<User>> {
     Logger.log('*********** AuthService - signup');
     Logger.log(user);
+
+    const validate = this.authValidation.createUser(user);
+
+    console.log('validate.error');
+    console.log(validate.error);
+    if (validate.error) {
+      Logger.error(validate.error.message);
+      throw new BadRequestException(validate.error.message);
+    }
+
     const newUser: Partial<User> = await this.usersService.createUser(user);
+
+    delete newUser['password'];
 
     return newUser;
   }

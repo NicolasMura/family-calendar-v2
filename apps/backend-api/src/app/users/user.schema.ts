@@ -3,6 +3,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Logger } from '@nestjs/common';
 
+
 export type UserDocument = User & Document; // ??
 
 @Schema({
@@ -19,10 +20,9 @@ export class User extends Document {
   @Prop({ unique: true, required: true })
   email: string;
 
-  @Prop({ unique: true })
+  @Prop()
   mobile: string;
 
-  @Prop({ required: true })
   @Prop()
   password: string;
 
@@ -37,19 +37,6 @@ export class User extends Document {
   //   picture: string
   // };
   comparePassword: (password: string) => Promise < boolean > ;
-  // async comparePassword (candidatePassword: string): Promise < boolean > {
-  //   let match: boolean;
-
-  //   try {
-  //     match = await bcrypt.compare(candidatePassword, this.password);
-  //   } catch (error) {
-  //     return error;
-  //   }
-
-  //   if (match) {
-  //     return match;
-  //   }
-  // }
   // gravatar: (size: number) => string;
 }
 

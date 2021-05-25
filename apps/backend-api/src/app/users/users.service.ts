@@ -1,6 +1,6 @@
 import { BadRequestException, ConflictException, HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 
 // This should be a real class/interface representing a user entity
@@ -25,22 +25,40 @@ export class UsersService {
   // ];
   private currentUser: User;
 
-  constructor(@InjectModel(User.name) private userModel : Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel : Model<User>) {}
 
   async getCurrentUser(): Promise<User> {
     return this.currentUser;
   }
 
+  async findUserById(id: number): Promise<User | undefined> {
+    // return this.users.find(user => user.id === id);
+    // const user: User = await this.userModel.findById(id).exec();
+    const user: User = await this.userModel.findOne({
+      _id: Types.ObjectId(id)
+    });
+
+    if (!user) {
+      Logger.error(`User with id ${id} not found`);
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    return user;
+  }
+
   async findUserByEmail(email: string): Promise<User | undefined> {
     // return this.users.find(user => user.email === email);
-    const user: User = await this.userModel.findOne({ email: email }).exec();
+    const user: User = await this.userModel.findOne({
+      email: email
+    })
+    .exec();
 
     if (!user) {
       Logger.error(`User with email ${email} not found`);
       throw new NotFoundException(`User with email ${email} not found`);
     }
 
-    this.currentUser = user;
+    // this.currentUser = user;
     return user;
   }
 
@@ -50,17 +68,22 @@ export class UsersService {
   }
 
   async createUser(user: User): Promise<Partial<User> | undefined> {
-    const newUser = new this.userModel(user);
+    const newUser: User = new this.userModel(user);
 
-    const existingEmail: User = await this.userModel.findOne({ email: newUser.email });
+    const existingEmail: User = await this.userModel.findOne({
+      email: newUser.email
+    });
 
     if (existingEmail) {
       Logger.error(`This email already exists`);
       throw new ConflictException(`This email already exists`);
     }
 
-    if (newUser.mobile) {
-      const existingMobile: User = await this.userModel.findOne({ mobile: newUser.mobile });
+    if (newUser.mobile !== '') {
+      console.log('BOB');
+      const existingMobile: User = await this.userModel.findOne({
+        mobile: newUser.mobile
+      });
 
       if (existingMobile) {
         Logger.error(`This mobile already exists`);
@@ -83,8 +106,11 @@ export class UsersService {
     Logger.log('savedUser:');
     Logger.log(savedUser);
 
-    // return savedUser;
-    const { password, ...result } = newUser;
+    let { password, ...result } = savedUser;
+
+    result = result['_doc'];
+    delete result['password'];
+
     return result;
   }
 
