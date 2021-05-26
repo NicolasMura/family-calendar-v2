@@ -21,13 +21,14 @@ services:
 
   api: # name of Node JS app
     image: nicolasmura/family-calendar-v2-backend-api
+    # image: test
     container_name: backend-v2
     env_file:
       - .env
     ports:
       - ${NODE_PORT}:${NODE_PORT}
     volumes:
-      - .env:/usr/family-calendar-v2/backend-api/.env
+      - .env:/usr/family-calendar-v2/backend-api/dist/apps/backend-api/.env
     depends_on:
       database:
         condition: service_healthy

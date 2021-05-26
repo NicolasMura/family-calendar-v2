@@ -28,7 +28,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "deploy:frontend-public:dockerhub": "nx build frontend-public --prod && docker build -t family-calendar-v2-frontend-public -f .docker/Dockerfile.frontend-public . && docker tag family-calendar-v2-frontend-public nicolasmura/family-calendar-v2-frontend-public && docker push nicolasmura/family-calendar-v2-frontend-public",
-    "deploy:backend-api:dockerhub": "nx build backend-api --prod && docker build -t family-calendar-v2-backend-api -f .docker/Dockerfile.backend-api . && docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api && docker push nicolasmura/family-calendar-v2-backend-api",
+    "deploy:backend-api:dockerhub": "docker build -t family-calendar-v2-backend-api -f .docker/Dockerfile.backend-api . && docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api && docker push nicolasmura/family-calendar-v2-backend-api",
     "deploy:database:dockerhub": "docker build -t family-calendar-v2-database -f .docker/Dockerfile.mongodb . && docker tag family-calendar-v2-database nicolasmura/family-calendar-v2-database && docker push nicolasmura/family-calendar-v2-database"
   },
   "private": true,

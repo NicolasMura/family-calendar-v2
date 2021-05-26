@@ -1,9 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-# /dist
-dist.tar.gz
-dist-public.tar.gz
+/dist/apps/backend-api
 /tmp
 /out-tsc
 # Only exists if Bazel was run
@@ -48,7 +46,8 @@ testem.log
 Thumbs.db
 
 # Misc
-package.json.bkp
-package-lock.json.bkp
 .env
 scripts/generate-build-infos.js
+.docker/mongodb_vol/log/*
+.docker/mongodb_vol/ssl/*
+.docker/apache_vol/*

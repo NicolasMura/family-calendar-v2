@@ -43,5 +43,9 @@ Thumbs.db
 ssl/fullchain.pem
 ssl/privkey.pem
 scripts/generate-build-infos.js
-apache_vol
-mongodb_vol
+.docker/apache_vol/log/*
+!.docker/apache_vol/log/.gitkeep
+.docker/apache_vol/ssl/*
+!.docker/apache_vol/ssl/.gitkeep
+.docker/mongodb_vol/*
+!.docker/mongodb_vol/.gitkeep

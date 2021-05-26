@@ -24,3 +24,4 @@
 
 # Backup every day @2h00 and log the result
 0 2 * * * /home/nmura/projects/family-calendar/db-backup/backup_mongodb.sh >>/var/log/family-calendar.nicolasmura.com/mongo_backup.log 2>&1
+0 2 * * * /home/nmura/projects/dev-family-calendar/db-backup/backup_mongodb.sh >>/var/log/dev.family-calendar.nicolasmura.com/mongo_backup.log 2>&1

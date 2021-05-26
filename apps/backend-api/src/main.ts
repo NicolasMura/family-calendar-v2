@@ -30,6 +30,7 @@ async function bootstrap() {
   // const port = process.env.PORT || 3333;
   const port = config.get<number>('NODE_PORT') || 3333;
   await app.listen(port, () => {
+    Logger.log(`Running in <${config.get<string>('NODE_ENV')}> environment`);
     Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
   });
 }

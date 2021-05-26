@@ -47,16 +47,20 @@ In you favorite terminal, run:
 ```bash
   # Create .env file
   cp .env.example .env
-  # Start up the whole application (front + back + mongodb) stack using docker compose
-  sudo chmod 777 mongodb_vol/data/log
-  docker compose -f docker-compose.yml --env-file .env up -d
+  # Start up the whole application (front + back + mongodb) stack using docker-compose
+  sudo chmod 777 .docker/mongodb_vol/log
+  docker-compose -f docker-compose.yml --env-file .env up -d
 ```
 
 To stop the app, just run:
 
 ```bash
-  docker compose -f docker-compose.yml --env-file .env down
+  docker-compose -f docker-compose.yml --env-file .env down
 ```
+
+> :warning: **_Warning_**
+>
+> `docker compose` command doesn't gather all environment variables, especially COMPOSE_FILE => use `docker-compose` instead.
 
 @TODO : faire un projet "chapeau" family-calendar avec le docker-compose.yml
 
@@ -64,17 +68,43 @@ To stop the app, just run:
 
 If needed, adjust environment variables in `apps/frontend-public/src/env.js`
 
-@TODO Local mongodb configuration
-
-In you favorite terminal, run:
+Then, run:
 
 ```bash
   git clone git@github.com:NicolasMura/family-calendar-v2.git
   cd family-calendar-v2
-  # Create .env file
+  # create .env file
   cp .env.example .env
-  # Start apps
-  yarn && nx serve frontend-public api
+  # install dependancies
+  yarn install
+```
+
+@TODO Local `mongodb` configuration
+
+Option 1
+
+@TODO
+
+Option 2
+
+Adjust MONGODB_URI environment variable in `.env` file:
+
+```bash
+  (...)
+  MONGODB_URI=mongodb://<user>:<password>@localhost:<DB_PORT>/
+  (...)
+```
+
+In you favorite terminal, run database container in the background:
+
+```bash
+  docker-compose --env-file .env up -d database
+```
+
+Finally, start frontend and backend apps:
+
+```bash
+  nx serve frontend-public backend-api
 ```
 
 # Dockerization - How To
@@ -95,6 +125,10 @@ Mandatory server-side files:
 * ssl/fullchain.pem
 * ssl/privkey.pem
 
+```bash
+  # mkdir -p .docker/apache_vol/log && mkdir .docker/apache_vol/ssl
+```
+
 Build new image for `frontend-public`:
 
 ```bash
@@ -104,21 +138,17 @@ Build new image for `frontend-public`:
   docker push nicolasmura/family-calendar-v2-frontend-public
   docker tag family-calendar-v2-frontend-public nicolasmura/family-calendar-v2-frontend-public:v1.0
   docker push nicolasmura/family-calendar-v2-frontend-public:v1.0
-
-  mkdir -p apache_vol/log && mkdir apache_vol/ssl
 ```
 
 Build new image for `backend`:
 
 ```bash
-  nx build backend-api --prod
+  # nx build backend-api --prod
   docker build -t family-calendar-v2-backend-api -f .docker/Dockerfile.backend-api .
   docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api
   docker push nicolasmura/family-calendar-v2-backend-api
   docker tag family-calendar-v2-backend-api nicolasmura/family-calendar-v2-backend-api:v1.0
   docker push nicolasmura/family-calendar-v2-backend-api:v1.0
-
-  mkdir -p apache_vol/log && mkdir apache_vol/ssl
 ```
 
 Build new image for `database`:
@@ -134,12 +164,25 @@ Build new image for `database`:
 Finally:
 
 ```bash
-  docker compose --env-file .env up -d
+  docker-compose --env-file .env up -d
 ```
 
 # Deploy in a real-world production environment
 
-@TODO
+> :warning: **_Important_**
+>
+> On Linux systems with Apache web server, you must set the Apache log folder ownership as following to make it work:
+> ```bash
+>   sudo chmod 777 .docker/mongodb_vol/log
+> ```
+>
+> Don't worry about that.
+
+Don't forget also:
+
+```bash
+  sudo chown -R <you>:www-data /var/log/family-calendar.nicolasmura.com
+```
 
 # A few words about Nx
 
