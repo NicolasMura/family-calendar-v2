@@ -21,7 +21,6 @@ services:
 
   api: # name of Node JS app
     image: nicolasmura/family-calendar-v2-backend-api
-    # image: test
     container_name: backend-v2
     env_file:
       - .env

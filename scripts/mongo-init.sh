@@ -19,7 +19,7 @@ mongo --eval "
     }
   )
 
-  db.getCollection('usermodel').insertOne({
+  db.getCollection('users').insertOne({
     profile: {
       gender: '',
       location: '',

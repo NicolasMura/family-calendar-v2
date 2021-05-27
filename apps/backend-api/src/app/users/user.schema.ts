@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 export type UserDocument = User & Document; // ??
 
 @Schema({
-  collection: 'usermodel',
+  collection: 'users',
   versionKey: false
 })
 export class User extends Document {

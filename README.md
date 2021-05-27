@@ -95,7 +95,7 @@ Adjust MONGODB_URI environment variable in `.env` file:
   (...)
 ```
 
-In you favorite terminal, run database container in the background:
+In you favorite terminal, run the database container in the background:
 
 ```bash
   docker-compose --env-file .env up -d database
