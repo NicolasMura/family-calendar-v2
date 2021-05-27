@@ -29,7 +29,7 @@ mongo --eval "
     },
     mobile: '$MONGO_INITDB_APPUSER_MOBILE',
     tokens: [],
-    email: '$MONGO_INITDB_APPUSER_USERNAME',
-    password: '$MONGO_INITDB_APPUSER_PASSWORD'
+    email: '$MONGO_INITDB_APPUSER_EMAIL',
+    password: '$MONGO_INITDB_APPUSER_HASHED_PASSWORD'
   });
 "

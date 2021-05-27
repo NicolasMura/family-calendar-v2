@@ -43,8 +43,8 @@ services:
     env_file:
       - .env
     ports:
-      - ${DB_PORT}:${DB_PORT}
-    command: ["--port", "$DB_PORT", "--logpath", "/var/log/mongodb/mongod.log"] # override the default command to start the service in the container
+      - ${MONGODB_PORT}:${MONGODB_PORT}
+    command: ["--port", "$MONGODB_PORT", "--logpath", "/var/log/mongodb/mongod.log"] # override the default command to start the service in the container
     healthcheck:
       test: ["CMD", "database-healthcheck.sh"]
       interval: 10s

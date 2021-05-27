@@ -6,17 +6,21 @@
 
 # Family Calendar PWA V2
 
-Fullstack Angular - Node JS - MongoDB monorepo for Family Calendar project.
+Fullstack monorepo for Family Calendar project. With Angular frontend, NestJS backend REST API and MongoDB.
 
 - [Family Calendar PWA V2](#family-calendar-pwa-v2)
 - [Requirements](#requirements)
 - [Quick start](#quick-start)
   - [Run & test locally with Docker](#run--test-locally-with-docker)
-  - [Run & test locally without Docker](#run--test-locally-without-docker)
+  - [Run & test (& dev!) locally without Docker](#run--test--dev-locally-without-docker)
+    - [Option 1: use your own local MongoDB](#option-1-use-your-own-local-mongodb)
+    - [Option 2: run MongoDB inside Docker compose container](#option-2-run-mongodb-inside-docker-compose-container)
 - [Dockerization - How To](#dockerization---how-to)
   - [MongoDB for Dev](#mongodb-for-dev)
   - [Frontend, backend and MongoDB for Prod](#frontend-backend-and-mongodb-for-prod)
 - [Deploy in a real-world production environment](#deploy-in-a-real-world-production-environment)
+- [Common troubleshootings](#common-troubleshootings)
+  - [API Container is unhealthy and doesn't start](#api-container-is-unhealthy-and-doesnt-start)
 - [A few words about Nx](#a-few-words-about-nx)
   - [CheatSheet](#cheatsheet)
 
@@ -49,26 +53,33 @@ In you favorite terminal, run:
   cp .env.example .env
   # Start up the whole application (front + back + mongodb) stack using docker-compose
   sudo chmod 777 .docker/mongodb_vol/log
-  docker-compose -f docker-compose.yml --env-file .env up -d
+  docker-compose --env-file .env up -d
+```
+
+Adjust `MONGODB_URI` environment variable in `.env` file:
+
+```bash
+  (...)
+  # Backend is living INSIDE the Docker compose container, so change `localhost` to `database`
+  MONGODB_URI=mongodb://<MONGO_INITDB_DBUSER_USERNAME>:<MONGO_INITDB_DBUSER_PASSWORD>@database:<MONGODB_PORT>/
+  (...)
 ```
 
 To stop the app, just run:
 
 ```bash
-  docker-compose -f docker-compose.yml --env-file .env down
+  docker-compose --env-file .env down
 ```
+
+Visit `https://localhost:28443` to see the result.
 
 > :warning: **_Warning_**
 >
 > `docker compose` command doesn't gather all environment variables, especially COMPOSE_FILE => use `docker-compose` instead.
 
-@TODO : faire un projet "chapeau" family-calendar avec le docker-compose.yml
+## Run & test (& dev!) locally without Docker
 
-## Run & test locally without Docker
-
-If needed, adjust environment variables in `apps/frontend-public/src/env.js`
-
-Then, run:
+Run:
 
 ```bash
   git clone git@github.com:NicolasMura/family-calendar-v2.git
@@ -79,19 +90,20 @@ Then, run:
   yarn install
 ```
 
-@TODO Local `mongodb` configuration
+If needed, adjust environment variables in `apps/frontend-public/src/env.js`
 
-Option 1
+### Option 1: use your own local MongoDB
 
-@TODO
+In this case, I'm pretty sure you will know what to do
 
-Option 2
+### Option 2: run MongoDB inside Docker compose container
 
-Adjust MONGODB_URI environment variable in `.env` file:
+Adjust `MONGODB_URI` environment variable in `.env` file:
 
 ```bash
   (...)
-  MONGODB_URI=mongodb://<user>:<password>@localhost:<DB_PORT>/
+  # Backend is living OUTSIDE the Docker compose container, so change `database` to `localhost`
+  MONGODB_URI=mongodb://<MONGO_INITDB_DBUSER_USERNAME>:<MONGO_INITDB_DBUSER_PASSWORD>@localhost:<MONGODB_PORT>/
   (...)
 ```
 
@@ -107,6 +119,8 @@ Finally, start frontend and backend apps:
   nx serve frontend-public backend-api
 ```
 
+Visit `https://localhost:28443` to see the result.
+
 # Dockerization - How To
 
 ## MongoDB for Dev
@@ -121,7 +135,7 @@ Build new image for `database`:
 
 Mandatory server-side files:
 
-* config/(dev.)family-calendar.nicolasmura.com-le-ssl-host-proxy.conf
+* config/(dev.)<URL_SITE>-le-ssl-host-proxy.conf
 * ssl/fullchain.pem
 * ssl/privkey.pem
 
@@ -178,11 +192,44 @@ Finally:
 >
 > Don't worry about that.
 
-Don't forget also:
+Don't forget also to give correct ownership to Apache log folder:
 
 ```bash
-  sudo chown -R <you>:www-data /var/log/family-calendar.nicolasmura.com
+  sudo chown -R <you>:www-data /var/log/<WEBAPP_FOLDER>
 ```
+
+# Common troubleshootings
+
+## API Container is unhealthy and doesn't start
+
+You have:
+
+```bash
+  $ docker-compose --env-file .env up -d
+  Creating database-v2 ... done
+
+  ERROR: for api Container "2b24bf6f0f69" is unhealthy.
+```
+
+The solutions is to double check:
+
+- MongoDB port variable must be named `MONGODB_PORT` in the following files:
+  - `.env`
+  - `docker-compose.yml`
+  - `scripts/database-healthcheck.sh`
+- Database port value in `MONGODB_URI` must be the same as `MONGODB_PORT`value
+- Host MongoDB log folder has correct permissions: `sudo chmod 777 .docker/mongodb_vol/log`
+- Apache log folder has correct ownership: `sudo chown -R <you>:www-data /var/log/<WEBAPP_FOLDER>`
+
+> :information_source: **_Note_**
+>
+> `MONGODB_PORT` is used to check database health when container is starting (via `scripts/database-healthcheck.sh` script), so if you rename it you will need to re-build the database image:
+>
+> ```bash
+>   docker build -t family-calendar-v2-database -f .docker/Dockerfile.mongodb . && docker tag family-calendar-v2-database nicolasmura/family-calendar-v2-database
+>    docker-compose --env-file .env down
+>    docker-compose --env-file .env up -d
+> ```
 
 # A few words about Nx
 
