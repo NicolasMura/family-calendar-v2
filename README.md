@@ -205,30 +205,50 @@ Don't forget also to give correct ownership to Apache log folder:
 You have:
 
 ```bash
-  $ docker-compose --env-file .env up -d
+  $ docker-compose --env-file .env up -d # OR docker-compose --env-file .env up -d database
   Creating database-v2 ... done
 
   ERROR: for api Container "2b24bf6f0f69" is unhealthy.
 ```
 
+In general, that's because:
+
+- you removed the `MONGODB_DB_MAIN` database defined in `.env` file, or changed some critical environment variables
+- you removed the`users` collection in `MONGODB_DB_MAIN`
+- you changed some critical environment variables
+
 The solutions is to double check:
 
-- MongoDB port variable must be named `MONGODB_PORT` in the following files:
+- MongoDB port variable is named `MONGODB_PORT` in the following files:
   - `.env`
   - `docker-compose.yml`
   - `scripts/database-healthcheck.sh`
-- Database port value in `MONGODB_URI` must be the same as `MONGODB_PORT`value
+- Database port in `MONGODB_URI` value is the same as `MONGODB_PORT` value
 - Host MongoDB log folder has correct permissions: `sudo chmod 777 .docker/mongodb_vol/log`
 - Apache log folder has correct ownership: `sudo chown -R <you>:www-data /var/log/<WEBAPP_FOLDER>`
+
+For Linux users using `docker-compose.production.yml` in production environment, also try to remove the named volume `mongodb`:
+
+```bash
+  docker volume rm -f <mongodb-volume-name>
+  # for example:
+  docker volume rm -f dev-family-calendar-v2_mongodb
+```
+
+For Mac OS X users, also try to clean the bind mounted volume for MongoDB `/data/db` (see `MONGODB_DB_DIR_FOR_MAC_ONLY` in `.env ` and `docker-compose.macosx-override.yml` files):
+
+```bash
+  rm -R .docker/mongodb_vol/db
+```
 
 > :information_source: **_Note_**
 >
 > `MONGODB_PORT` is used to check database health when container is starting (via `scripts/database-healthcheck.sh` script), so if you rename it you will need to re-build the database image:
 >
 > ```bash
->   docker build -t family-calendar-v2-database -f .docker/Dockerfile.mongodb . && docker tag family-calendar-v2-database nicolasmura/family-calendar-v2-database
+>   docker build -t family-calendar-v2-database -f .docker/Dockerfile.mongodb .  --no-cache && docker tag family-calendar-v2-database nicolasmura/family-calendar-v2-database
 >    docker-compose --env-file .env down
->    docker-compose --env-file .env up -d
+>    docker-compose --env-file .env up -d # OR docker-compose --env-file .env up -d database
 > ```
 
 # A few words about Nx
