@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Logger, Post, Request, SetMetadata, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from '../users/user.schema';
+// import { User } from '../users/user.schema';
+import { User } from '@family-calendar-v2/models';
 import { LocalAuthGuard } from './local-auth.guard';
 
 // Create a custom decorator using the SetMetadata decorator factory function (used for declaring routes as public)

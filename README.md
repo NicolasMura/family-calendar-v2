@@ -71,7 +71,7 @@ To stop the app, just run:
   docker-compose --env-file .env down
 ```
 
-Visit `https://localhost:28443` to see the result.
+Visit `https://localhost:44300` to see the result.
 
 > :warning: **_Warning_**
 >
@@ -119,7 +119,7 @@ Finally, start frontend and backend apps:
   nx serve frontend-public backend-api
 ```
 
-Visit `https://localhost:28443` to see the result.
+Visit `https://localhost:4200` to see the result.
 
 # Dockerization - How To
 

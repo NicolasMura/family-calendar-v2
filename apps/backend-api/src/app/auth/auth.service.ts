@@ -2,7 +2,8 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, Logger } fr
 import { JwtService } from '@nestjs/jwt';
 import { AuthValidation } from './auth.validation';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/user.schema';
+// import { User } from '../users/user.schema';
+import { User } from '@family-calendar-v2/models';
 
 @Injectable()
 export class AuthService {

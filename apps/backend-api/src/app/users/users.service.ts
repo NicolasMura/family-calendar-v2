@@ -1,7 +1,9 @@
 import { BadRequestException, ConflictException, HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { User, UserDocument } from './user.schema';
+// import { User, UserDocument } from './user.schema';
+// import { UserDocument } from './user.schema';
+import { User } from '@family-calendar-v2/models';
 
 // This should be a real class/interface representing a user entity
 // export type User = any;

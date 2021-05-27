@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { environment } from 'apps/frontend-public/src/environment';
+import { environment } from '@family-calendar-v2/frontend-tools';
 import { Todo } from '@family-calendar-v2/models';
 
 

@@ -3,7 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { UserSchema, User } from './user.schema';
+// import { UserSchema, User } from './user.schema';
+// import { UserSchema } from './user.schema';
+import { User, UserSchema } from '@family-calendar-v2/models';
 
 @Module({
   imports: [

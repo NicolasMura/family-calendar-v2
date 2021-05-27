@@ -1,5 +1,7 @@
 import * as Joi from 'joi';
-import { User, UserDocument } from '../users/user.schema';
+// import { User, UserDocument } from '../users/user.schema';
+// import { UserDocument } from '../users/user.schema';
+import { User } from '@family-calendar-v2/models';
 
 /**
 * @export
