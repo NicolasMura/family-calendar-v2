@@ -275,3 +275,15 @@ Create auth service inside auth module running the 'service' NestJs generator wi
 ```bash
   nx g @nrwl/nest:service auth --project backend-api --directory app/auth --flat
 ```
+
+Create auth service inside frontend-tools Angular library running the 'service' Angular generator with Nx project support :
+
+```bash
+  nx g @nrwl/angular:service auth --project frontend-tools --directory app/auth --flat --dry-run
+```
+
+Create Angular vendors lib:
+
+```bash
+  nx g @nrwl/angular:lib vendors
+```

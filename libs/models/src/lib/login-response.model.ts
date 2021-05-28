@@ -1,13 +1,18 @@
 export class LoginResponse {
+  access_token: string;
   status: number;
   logged: boolean;
-  token: string;
   message: string;
 
-  constructor(status: number, logged: boolean, token: string, message: string) {
+  constructor(
+    access_token: string,
+    status: number,
+    logged: boolean,
+    message: string
+  ) {
+    this.access_token = access_token;
     this.status = status;
     this.logged = logged;
-    this.token = token;
     this.message = message;
   }
 }

@@ -1,6 +1,5 @@
-import { Controller, Get, Logger, Post, Request, SetMetadata, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, SetMetadata } from '@nestjs/common';
 import { AppService } from './app.service';
-import { LocalAuthGuard } from './auth/local-auth.guard';
 
 // Create a custom decorator using the SetMetadata decorator factory function (used for declaring routes as public)
 export const IS_PUBLIC_KEY = 'isPublic';

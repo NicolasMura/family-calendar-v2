@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -6,15 +6,4 @@ import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angu
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit, AfterViewInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-
-  }
-}
+export class CalendarComponent {}

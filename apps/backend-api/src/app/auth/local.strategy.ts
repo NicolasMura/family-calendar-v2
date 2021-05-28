@@ -9,14 +9,14 @@ import { User } from '@family-calendar-v2/models';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({
-      usernameField: 'email',
+      usernameField: 'username',
       passwordField: 'password'
     });
   }
 
-  async validate(email: string, password: string): Promise<User> {
+  async validate(username: string, password: string): Promise<Partial<User>> {
     Logger.log('LocalStrategy extends PassportStrategy - validate');
-    const user = await this.authService.validateUser(email, password);
+    const user = await this.authService.validateUser(username, password);
 
     if (!user) {
       Logger.error('validation error: no user');

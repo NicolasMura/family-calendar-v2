@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { CoreConstants, GlobalService, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { CoreConstants, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { GlobalService } from './global-service.service'; // strangely weird, but need to be imported like this...
 export const WINDOW = new InjectionToken<Window>('window');
 
 

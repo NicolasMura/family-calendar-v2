@@ -2,6 +2,7 @@ export * from './lib/frontend-tools.module';
 export * from './environment';
 export * from './lib/core-constants';
 export * from './lib/guards/auth.guard';
+export * from './lib/interceptors/token.interceptor';
 export * from './lib/services/auth.service';
 export * from './lib/services/error-handling.service';
 export * from './lib/services/global-service.service';

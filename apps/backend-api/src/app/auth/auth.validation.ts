@@ -11,20 +11,21 @@ import { User } from '@family-calendar-v2/models';
 // export class AuthValidation extends Validation {
 export class AuthValidation {
 
-  createUser(params: User): any {
+  createUser(params: User): Joi.ValidationResult {
   // createUser(params: IUserModel): Joi.ValidationResult<IUserModel> {
     const userProfile: Joi.Schema = Joi.object().keys({
-      isChild: Joi.boolean().required(),
-      name: Joi.string().required(),
+      isChild: Joi.boolean(),
+      name: Joi.string(),
       gender: Joi.string(),
       location: Joi.string(),
       picture: Joi.string()
     }).required();
 
     const schema: Joi.Schema = Joi.object().keys({
-      mobile: Joi.string().allow(''),
-      password: Joi.string().required(),
+      username: Joi.string().required(),
       email: Joi.string().email().required(),
+      password: Joi.string().required(),
+      mobile: Joi.string().allow(''),
       profile: userProfile
     });
 

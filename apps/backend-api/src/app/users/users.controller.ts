@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Request } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller()
@@ -14,14 +14,17 @@ export class UsersController {
 
   @Get('profile')
   getProfile(@Request() req) {
-    // Logger.log('**************');
-    // Logger.log(req.user);
+    Logger.log('**************');
+    Logger.log(req.user);
     // return req.user;
     return this.usersService.getCurrentUser();
   }
 
   @Get('users')
   getUsers(@Request() req) {
+    Logger.log('**************');
+    Logger.log(req.user);
+    // return req.user;
     return this.usersService.findAll();
   }
 }

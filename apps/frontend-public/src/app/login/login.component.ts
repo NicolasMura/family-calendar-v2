@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CoreConstants, AuthService, NotificationService } from '@family-calendar-v2/frontend-tools';
@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
     this.loginLoadingSpinner = true;
     this.loginError = false;
 
-    const email    = (this.loginForm.get('username') as any).value;
-    const password = (this.loginForm.get('password') as any).value;
+    const username    = this.loginForm.get('username').value;
+    const password = this.loginForm.get('password').value;
 
-    if (email && password) {
-      this.authService.login(email, password).subscribe((loginResponse: LoginResponse) => {
+    if (username && password) {
+      this.authService.login(username, password).subscribe((loginResponse: LoginResponse) => {
         console.log(loginResponse);
         this.router.navigate([CoreConstants.routePath.root]);
       }, error => {

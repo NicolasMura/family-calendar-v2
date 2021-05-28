@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/apps/api',
     '<rootDir>/libs/frontend-tools',
     '<rootDir>/libs/models',
+    '<rootDir>/libs/vendors',
   ],
 };

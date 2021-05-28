@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from '@family-calendar-v2/frontend-tools';
+import 'hammerjs';
 
 if (environment.production) {
   enableProdMode();

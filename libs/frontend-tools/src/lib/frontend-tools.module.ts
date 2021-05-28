@@ -9,6 +9,6 @@ import { TodosComponent } from './components/todos/todos.component';
   ],
   exports: [
     TodosComponent
-  ],
+  ]
 })
 export class FrontendToolsModule {}

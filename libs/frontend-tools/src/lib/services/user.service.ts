@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap, delay } from 'rxjs/operators';
-import { environment } from '@family-calendar-v2/frontend-tools';
-import { GlobalService, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { catchError } from 'rxjs/operators';
+import { environment, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { GlobalService } from './global-service.service'; // strangely weird, but need to be imported like this...
 import { User } from '@family-calendar-v2/models';
 
 

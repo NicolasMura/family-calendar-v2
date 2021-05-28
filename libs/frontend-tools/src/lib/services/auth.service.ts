@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorage, LocalStorageService } from 'ngx-webstorage';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay, catchError, map, tap, timeout } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, tap, timeout } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
-import { environment } from '@family-calendar-v2/frontend-tools';
-import { CoreConstants, GlobalService, UserService, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { environment, CoreConstants, UserService, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { GlobalService } from './global-service.service'; // strangely weird, but need to be imported like this...
 import { LoginResponse } from '@family-calendar-v2/models';
 
 
@@ -65,10 +65,10 @@ export class AuthService extends GlobalService {
         console.log('checkForExistingToken - success login with valid existing token');
         this.startSession(existingToken);
       } else {
-        console.log('checkForExistingToken - failed to login: got existing token, but expired');
-        // if token is expired, we must cancel session + clear local storage to get a chance to start session next time we login
-        this.logout();
-        const expirationNotif = this.notificationService.sendNotification('@TODO', '', { duration: 0 });
+        // console.log('checkForExistingToken - failed to login: got existing token, but expired');
+        // // if token is expired, we must cancel session + clear local storage to get a chance to start session next time we login
+        // this.logout();
+        // this.notificationService.sendNotification('@TODO', '', { duration: 0 });
       }
     } else {
       // got no token, do nothing
@@ -80,17 +80,17 @@ export class AuthService extends GlobalService {
   /**
    * Log in
    */
-  public login(email: string, password: string): Observable<LoginResponse> {
+  public login(username: string, password: string): Observable<LoginResponse> {
     const url = `${this.baseUrlAuth}/login`;
     const body = {
-      username: 'john',
-      password: 'changeme'
+      username: username,
+      password: password
     };
     return this.http.post<LoginResponse>(url, body)
       .pipe(
         // delay(1000),
-        timeout(10000),
-        tap((loginResponse: LoginResponse) => this.startSession(loginResponse.token)),
+        timeout(15000),
+        tap((loginResponse: LoginResponse) => this.startSession(loginResponse.access_token)),
         catchError(error => this.handleError(error))
       );
   }
@@ -98,10 +98,10 @@ export class AuthService extends GlobalService {
   /**
    * Sign up
    */
-  public signup(email: string, password: string): Observable<LoginResponse> {
+  public signup(username: string, password: string): Observable<LoginResponse> {
     const url = `${this.baseUrlAuth}/signup`;
     const body = {
-      email,
+      username,
       password
     };
     return this.http.post<LoginResponse>(url, body)

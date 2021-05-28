@@ -9,8 +9,8 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar, MatSnackBarConfig } from '
   providedIn: 'root'
 })
 export class NotificationService {
-  // snackBarRef: SimpleSnackBar;
-  snackBarRef: any;
+  snackBarRef: SimpleSnackBar;
+  // snackBarRef: any;
 
   constructor(
     private snackBar: MatSnackBar

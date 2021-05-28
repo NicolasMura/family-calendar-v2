@@ -3,35 +3,31 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Logger } from '@nestjs/common';
 
-// export class User {
-//   mobile?: string;
-//   email: string;
-//   profile: {
-//     name: string,
-//     isChild?: boolean,
-//     gender?: string,
-//     location?: string,
-//     picture?: string
-//   };
-//   schtroumpfs?: User[] | undefined;
-//   _id?: string;
-
-//   constructor(
-//     mobile: string,
-//     email: string,
-//     profile: { name: string, isChild?: boolean },
-//     schtroumpfs?: User[],
-//     _id?: string
-//   ) {
-//     this.mobile = mobile;
-//     this.email = email;
-//     this.profile = profile;
-//     this.schtroumpfs = schtroumpfs;
-//     this._id = _id;
-//   }
-// }
 
 export type UserDocument = User & Document; // ??
+
+@Schema({
+  versionKey: false,
+  _id: false
+})
+export class UserProfile extends Document {
+  @Prop({ default: false })
+  isChild: boolean;
+
+  @Prop({ default: 'Bob' })
+  name: string;
+
+  @Prop({ default: '' })
+  gender: string;
+
+  @Prop({ default: '' })
+  location: string;
+
+  @Prop({ default: '' })
+  picture: string;
+}
+
+export const UserProfileSchema = SchemaFactory.createForClass(UserProfile);
 
 @Schema({
   collection: 'users',
@@ -53,8 +49,14 @@ export class User extends Document {
   @Prop()
   password: string;
 
+  @Prop({default: false})
+  isAdmin: boolean;
+
   @Prop()
   created_at: Date;
+
+  @Prop()
+  profile: UserProfile;
 
   // profile: {
   //   isChild: boolean,
@@ -87,7 +89,9 @@ UserSchema.methods.comparePassword = async function (candidatePassword: string):
 /**
 * Save hashed password
 */
+// eslint-disable-next-line
 UserSchema.pre<User>('save', async function(next: Function) {
+  // eslint-disable-next-line
   const user: User = this;
 
   // if (!user.isModified('password')) {

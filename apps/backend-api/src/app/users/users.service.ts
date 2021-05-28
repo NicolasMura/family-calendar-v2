@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 // import { User, UserDocument } from './user.schema';
@@ -45,6 +45,8 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
+    // delete user['password'];
+
     return user;
   }
 
@@ -71,6 +73,8 @@ export class UsersService {
 
   async createUser(user: User): Promise<Partial<User> | undefined> {
     const newUser: User = new this.userModel(user);
+    Logger.log('newUser');
+    Logger.log(newUser);
 
     const existingEmail: User = await this.userModel.findOne({
       email: newUser.email
@@ -108,12 +112,13 @@ export class UsersService {
     Logger.log('savedUser:');
     Logger.log(savedUser);
 
-    let { password, ...result } = savedUser;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...result } = savedUser;
 
-    result = result['_doc'];
-    delete result['password'];
+    const docResult = result['_doc'];
+    delete docResult['password'];
 
-    return result;
+    return docResult;
   }
 
 

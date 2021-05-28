@@ -1,9 +1,10 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 import { AuthValidation } from './auth.validation';
 import { UsersService } from '../users/users.service';
-// import { User } from '../users/user.schema';
 import { User } from '@family-calendar-v2/models';
+import { LoginResponse } from '@family-calendar-v2/models';
 
 @Injectable()
 export class AuthService {
@@ -13,19 +14,25 @@ export class AuthService {
     private authValidation: AuthValidation
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(username: string, pass: string): Promise<Partial<User>> {
     Logger.log('*********** AuthService - validateUser');
-    Logger.log(email);
+    Logger.log(username);
     Logger.log(pass);
 
-    const user: User = await this.usersService.findUserByEmail(email);
+    const user: User = await this.usersService.findUserByEmail(username);
+    // Logger.log(user);
 
     const isMatched: boolean = await user.comparePassword(pass);
 
     Logger.log(isMatched);
     if (isMatched) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
-      return result;
+
+      const docResult = result['_doc'];
+      delete docResult['password'];
+
+      return docResult;
     } else {
       Logger.error('Bad password');
     }
@@ -37,12 +44,23 @@ export class AuthService {
     // return null;
   }
 
-  async login(user: User): Promise<any> {
+  async login(user: User): Promise<LoginResponse> {
     Logger.log('*********** AuthService - login');
-    const payload = { email: user.email, username: user.username, sub: user.userId };
+    // Logger.log(user);
+    const payload = {
+      sub: user._id,
+      username: user.username,
+      email: user.email,
+      mobile: user.mobile,
+      isAdmin: user.isAdmin,
+      profile: user.profile
+    };
 
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload, {
+        secret: jwtConstants.secret
+        // expiresIn: '60m'
+      }),
       status: 200,
       logged: true,
       message: 'Sign in successfull'
@@ -64,7 +82,7 @@ export class AuthService {
 
     const newUser: Partial<User> = await this.usersService.createUser(user);
 
-    delete newUser['password'];
+    // delete newUser['password'];
 
     return newUser;
   }

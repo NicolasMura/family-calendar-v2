@@ -16,7 +16,9 @@ async function bootstrap() {
     let whitelist: string[];
     try {
       whitelist = ALLOWED_CORS.split(',');
-    } catch (e) {}
+    } catch (e) {
+      Logger.error('Error while retrieving ALLOWED_CORS variable...');
+    }
     if (whitelist?.length > 0) {
       app.enableCors({
         origin: whitelist

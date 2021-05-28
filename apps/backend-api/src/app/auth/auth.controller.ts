@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Request, SetMetadata, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Request, SetMetadata, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 // import { User } from '../users/user.schema';
 import { User } from '@family-calendar-v2/models';
@@ -21,7 +21,6 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
-  // @UseGuards(LocalAuthGuard)
   @Public()
   @Post('auth/signup')
   async signup(@Body() user: User) {

@@ -8,13 +8,13 @@
         "plugin:@nrwl/nx/angular",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "parserOptions": { "project": ["apps/frontend-public/tsconfig.*?.json"] },
+      "parserOptions": { "project": ["libs/vendors/tsconfig.*?.json"] },
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": "familyCalendarV2",
             "style": "camelCase"
           }
         ],
@@ -22,7 +22,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "family-calendar-v2",
             "style": "kebab-case"
           }
         ]
