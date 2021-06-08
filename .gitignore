@@ -38,6 +38,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Cypress
+cypress.env.json
+
 # Misc
 .env
 ssl/fullchain.pem

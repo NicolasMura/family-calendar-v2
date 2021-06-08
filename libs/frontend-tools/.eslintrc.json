@@ -14,7 +14,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "familyCalendarV2",
+            "prefix": "lib",
             "style": "camelCase"
           }
         ],
@@ -22,7 +22,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "family-calendar-v2",
+            "prefix": "lib",
             "style": "kebab-case"
           }
         ]

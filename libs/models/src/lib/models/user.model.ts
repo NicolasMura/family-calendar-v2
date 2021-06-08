@@ -2,15 +2,15 @@ import * as bcrypt from 'bcrypt';
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Logger } from '@nestjs/common';
+import { IUser, IUserProfile } from "../interfaces/user.interface";
 
-
-export type UserDocument = User & Document; // ??
+// export type UserDocument = User & Document; // ??
 
 @Schema({
   versionKey: false,
   _id: false
 })
-export class UserProfile extends Document {
+export class UserProfile extends Document implements IUserProfile {
   @Prop({ default: false })
   isChild: boolean;
 
@@ -33,7 +33,7 @@ export const UserProfileSchema = SchemaFactory.createForClass(UserProfile);
   collection: 'users',
   versionKey: false
 })
-export class User extends Document {
+export class User extends Document implements IUser {
   @Prop()
   userId: number;
 
@@ -52,21 +52,39 @@ export class User extends Document {
   @Prop({default: false})
   isAdmin: boolean;
 
+  // @Prop()
+  // schtroumpfs?: User[];
+
   @Prop()
   created_at: Date;
 
   @Prop()
   profile: UserProfile;
 
-  // profile: {
-  //   isChild: boolean,
-  //   name: string,
-  //   gender: string,
-  //   location: string,
-  //   picture: string
-  // };
   comparePassword: (password: string) => Promise < boolean > ;
   // gravatar: (size: number) => string;
+
+  // constructor(
+  //   username: string,
+  //   email: string,
+  //   mobile: string,
+  //   isAdmin: boolean,
+  //   created_at: Date,
+  //   profile: UserProfile,
+  //   schtroumpfs?: User[],
+  //   _id?: string
+  // ) {
+  //   super();
+
+  //   this.username = username;
+  //   this.email = email;
+  //   this.mobile = mobile;
+  //   this.isAdmin = isAdmin;
+  //   this.created_at = created_at;
+  //   this.profile = profile;
+  //   this.schtroumpfs = schtroumpfs;
+  //   this._id = _id;
+  // }
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

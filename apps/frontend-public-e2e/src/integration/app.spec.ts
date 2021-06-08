@@ -5,7 +5,7 @@ import { getAddTodoButton, getTodos } from '../support/app.po';
 describe('frontend-public', () => {
   beforeEach(() => cy.visit('/'));
 
-  it('should display welcome message', () => {
+  xit('should display welcome message', () => {
     // Custom command example, see `../support/commands.ts` file
     cy.login('my-email@something.com', 'myPassword');
 
@@ -13,7 +13,7 @@ describe('frontend-public', () => {
     getGreeting().contains('Welcome to frontend-public!');
   });
 
-  it('should display todos', () => {
+  xit('should display todos', () => {
     getTodos().should((t) => expect(t.length).equal(2));
     getAddTodoButton().click();
     getTodos().should((t) => expect(t.length).equal(3));

@@ -8,5 +8,28 @@
   "video": true,
   "videosFolder": "../../dist/cypress/apps/frontend-public-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/frontend-public-e2e/screenshots",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "env": {
+    "baseUrl": "http://localhost:4200",
+    "protocol": "http",
+    "hostname": "localhost",
+    "port": 4200,
+    "backApi": {
+      "baseUrlAuth":          "http://localhost:3333/api/auth",
+      "baseUrlAuthPublic":    "http://localhost:3333/api/public/auth",
+      "baseUrlUser":          "http://localhost:3333/api/public/users",
+      "baseUrlCalendarEvent": "http://localhost:3333/api/public/events",
+      "baseUrlTodos":         "http://localhost:3333/api/public/todos"
+    },
+    "routes": {
+      "root": "",
+      "login": "login",
+      "calendar": "calendar",
+      "settings": "settings",
+      "maintenance": "maintenance"
+    }
+  },
+  "viewportWidth": 1920,
+  "viewportHeight": 969,
+  "pageLoadTimeout": 20000
 }

@@ -19,6 +19,7 @@ Fullstack monorepo for Family Calendar project. With Angular frontend, NestJS ba
   - [MongoDB for Dev](#mongodb-for-dev)
   - [Frontend, backend and MongoDB for Prod](#frontend-backend-and-mongodb-for-prod)
 - [Deploy in a real-world production environment](#deploy-in-a-real-world-production-environment)
+- [End-to-end (e2e) tests](#end-to-end-e2e-tests)
 - [Common troubleshootings](#common-troubleshootings)
   - [API Container is unhealthy and doesn't start](#api-container-is-unhealthy-and-doesnt-start)
 - [A few words about Nx](#a-few-words-about-nx)
@@ -197,6 +198,10 @@ Don't forget also to give correct ownership to Apache log folder:
 ```bash
   sudo chown -R <you>:www-data /var/log/<WEBAPP_FOLDER>
 ```
+
+# End-to-end (e2e) tests
+
+@TODO
 
 # Common troubleshootings
 

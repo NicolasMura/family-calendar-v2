@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment, NotificationService, ErrorHandlingService } from '@family-calendar-v2/frontend-tools';
+import { environment, NotificationService, ErrorHandlingService, User } from '@family-calendar-v2/frontend-tools';
 import { GlobalService } from './global-service.service'; // strangely weird, but need to be imported like this...
-import { User } from '@family-calendar-v2/models';
 
 
 /**
@@ -30,9 +29,9 @@ export class UserService extends GlobalService {
    * Users who are members of a given family
    */
   public users: User[] = [
-    // new User('', '', { name: '', isChild: false }, undefined, ''),
-    // new User('', '', { name: '', isChild: false }, undefined, ''),
-    // new User('', '', { name: '', isChild: false }, undefined, '')
+    // new User('bob1', 'bob1@tmp.fr', '', false, new Date(), new UserProfile({ name: '', isChild: false }), undefined),
+    // new User('bob2', 'bob2@tmp.fr', '', false, new Date(), new UserProfile({ name: '', isChild: false }), undefined),
+    // new User('bob3', 'bob3@tmp.fr', '', false, new Date(), new UserProfile({ name: '', isChild: false }), undefined)
   ];
   /**
    * Users as parents + children group
@@ -84,8 +83,11 @@ export class UserService extends GlobalService {
 
     if (userDecoded) {
       // user = new User(
-      //   userDecoded.mobile || '',
+      //   userDecoded.username,
       //   userDecoded.email,
+      //   userDecoded.mobile,
+      //   userDecoded.isAdmin,
+      //   userDecoded.created_at,
       //   userDecoded.profile,
       //   undefined,
       //   userDecoded._id

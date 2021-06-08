@@ -1,17 +1,35 @@
-form {
+.page-login {
+  height: 82vh;
   display: flex;
   flex-direction: column;
-  // margin-top: 20px;
-  padding: 50px;
 
-  button.submit {
-    align-self: center;
-    margin-top: 20px;
-    // background-color: $mat-primary;
+  form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    // margin-top: 20px;
+    padding: 50px;
+
+    button.submit {
+      align-self: center;
+      margin-top: 20px;
+      // background-color: $mat-primary;
+    }
+
+    mat-error.login-error {
+      text-align: center;
+      margin-top: 20px;
+    }
   }
 
-  mat-error.login-error {
+  .c-trop-bo {
+    flex: 1;
+    max-height: 38vh;
     text-align: center;
-    margin-top: 20px;
+
+    img {
+      height: 100%
+    }
   }
 }
+

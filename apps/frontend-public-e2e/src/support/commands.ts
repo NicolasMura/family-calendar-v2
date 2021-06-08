@@ -31,3 +31,33 @@ Cypress.Commands.add('login', (email, password) => {
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('loginAs', () => {
+  const username = Cypress.env('USERNAME');
+  const password = Cypress.env('PASSWORD');
+  const loginUrl = `${Cypress.env('backApi').baseUrlAuth}/login`;
+
+  return cy
+    .request({
+      method: 'POST',
+      url: loginUrl,
+      body: {
+        username,
+        password
+      },
+      // headers: {
+      //   'client-api': 'mycloud-portal'
+      // }
+    })
+    .its('body')
+    .then(body => {
+      localStorage.setItem(
+        'ngx-webstorage|tokenlocalstorage',
+        JSON.stringify(body.access_token)
+      );
+      // localStorage.setItem(
+      //   'ngx-webstorage|hasreadthedocslocalstorage',
+      //   JSON.stringify('true')
+      // );
+    });
+});

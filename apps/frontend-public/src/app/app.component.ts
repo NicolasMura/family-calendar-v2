@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment, AuthService, UtilitiesService, UserService } from '@family-calendar-v2/frontend-tools';
-import { Todo, User } from '@family-calendar-v2/models';
+import { environment, AuthService, UtilitiesService, UserService, User } from '@family-calendar-v2/frontend-tools';
+import { Todo } from '@family-calendar-v2/models';
+// import { Todo, User } from '@family-calendar-v2/models';
 
 
 /**

@@ -45,6 +45,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Cypress
+cypress.env.json
+
 # Misc
 .env
 scripts/generate-build-infos.js
